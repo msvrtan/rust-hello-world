@@ -2,12 +2,20 @@
 
 #[macro_use]
 extern crate rocket;
+extern crate rocket_contrib;
+
+use rocket_contrib::templates::Template;
+use std::collections::HashMap;
 
 #[get("/")]
-fn index() -> &'static str {
-    "Hello, world!"
+fn homepage() -> Template {
+    let context = HashMap::<String, String>::new();
+    Template::render("homepage", &context)
 }
 
 fn main() {
-    rocket::ignite().mount("/", routes![index]).launch();
+    rocket::ignite()
+        .mount("/", routes![homepage])
+        .attach(Template::fairing())
+        .launch();
 }
