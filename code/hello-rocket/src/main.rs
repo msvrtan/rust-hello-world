@@ -3,19 +3,22 @@
 #[macro_use]
 extern crate rocket;
 extern crate rocket_contrib;
+extern crate askama;
 
-use rocket_contrib::templates::Template;
-use std::collections::HashMap;
+use askama::Template;
 
-#[get("/")]
-fn homepage() -> Template {
-    let context = HashMap::<String, String>::new();
-    Template::render("homepage", &context)
+#[derive(Template)]
+#[template(path = "homepage.html")]
+struct HomepageTemplate<'a> {
+    name: &'a str,
 }
 
+#[get("/")]
+fn hello() -> HomepageTemplate<'static> {
+    HomepageTemplate { name: "world" }
+}
 fn main() {
     rocket::ignite()
-        .mount("/", routes![homepage])
-        .attach(Template::fairing())
+        .mount("/", routes![hello])
         .launch();
 }
