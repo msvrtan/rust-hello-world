@@ -5,18 +5,12 @@ extern crate rocket;
 extern crate askama;
 extern crate rocket_contrib;
 
-use askama::Template;
+mod homepage;
+mod impressum;
 
-#[derive(Template)]
-#[template(path = "homepage.html")]
-struct HomepageTemplate<'a> {
-    name: &'a str,
-}
-
-#[get("/")]
-fn hello() -> HomepageTemplate<'static> {
-    HomepageTemplate { name: "world" }
-}
 fn main() {
-    rocket::ignite().mount("/", routes![hello]).launch();
+    rocket::ignite()
+        .mount("/", routes![homepage::index_action])
+        .mount("/", routes![impressum::index_action])
+        .launch();
 }
