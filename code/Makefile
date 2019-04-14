@@ -24,5 +24,8 @@ run:
 test:
 	cd hello-rocket / && time -p cargo test --tests
 
+watch:
+	cd hello-rocket / && watchexec --exts rs,html --restart "cargo run"
+
 wip:
 	git add . && git commit -am 'wip' && make build
