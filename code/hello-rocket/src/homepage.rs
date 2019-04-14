@@ -3,10 +3,10 @@ use askama::Template;
 #[derive(Template)]
 #[template(path = "homepage/index.html")]
 pub struct HomepageTemplate<'a> {
-    name: &'a str,
+    page_title: &'a str,
 }
 
 #[get("/")]
 pub fn index_action() -> HomepageTemplate<'static> {
-    HomepageTemplate { name: "world" }
+    HomepageTemplate { page_title: "Null Development" }
 }
