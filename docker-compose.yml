@@ -1,0 +1,10 @@
+version: '3.2'
+services:
+  helloworld_dev:
+    container_name: helloworld_dev
+    build:
+      context: ./code
+    ports:
+      - "8000:8000"
+    working_dir: /app
+    stop_grace_period: 0s
